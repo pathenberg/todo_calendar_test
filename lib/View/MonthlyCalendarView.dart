@@ -1,7 +1,14 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 class MonthlyCalendarView extends StatefulWidget {
+  final void Function(String formattedDate, DateTime focusedDay) onDaySelectedCallback;
+
+  const MonthlyCalendarView({required this.onDaySelectedCallback});
+
   @override
   _MonthlyCalendarViewState createState() => _MonthlyCalendarViewState();
 }
@@ -13,6 +20,11 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
     setState(() {
       _today = day;
     });
+
+  
+    String formattedDate = DateFormat('EEEE/dd/MM/yyyy', 'fr_FR').format(day);
+
+    widget.onDaySelectedCallback(formattedDate, focusedDay);
   }
 
   @override
@@ -27,7 +39,6 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          Text("Jour Sélectionné = " + _today.toString().split(" ")[0]),
           Container(
             child: TableCalendar(
               locale: 'fr_FR',
@@ -36,7 +47,6 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                 formatButtonVisible: false,
                 titleCentered: true,
               ),
-
               availableGestures: AvailableGestures.all,
               selectedDayPredicate: (day) => isSameDay(day, _today),
               focusedDay: _today,
@@ -44,11 +54,11 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
               lastDay: DateTime.utc(2030, 3, 14),
               onDaySelected: _onDaySelected,
               calendarStyle: CalendarStyle(
-              selectedDecoration: BoxDecoration(
-                color: Colors.deepPurple[300],
-                shape: BoxShape.circle,  
+                selectedDecoration: BoxDecoration(
+                  color: Colors.deepPurple[300],
+                  shape: BoxShape.circle,
+                ),
               ),
-            ),
             ),
           ),
         ],

@@ -1,28 +1,23 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:todo_calendar_test/view/MonthlyCalendarView.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:todo_calendar_test/Controller/TaskController.dart';
 import 'package:todo_calendar_test/View/DailyCalendarView.dart';
-
-
-
-
-
-
+import 'package:todo_calendar_test/View/MonthlyCalendarView.dart';
 
 void main() {
-   initializeDateFormatting().then((_) => runApp(MyApp()));
+  initializeDateFormatting().then((_) => runApp(MyApp()));
+  
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Calendar',
+      title: 'Mon Calendrier',
       debugShowCheckedModeBanner: false,
       home: HomePage(),
-      
-      
     );
   }
 }
@@ -32,11 +27,17 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-
 class _HomePageState extends State<HomePage> {
+  DateTime _selectedDay = DateTime.now();
   int _currentIndex = 0;
-  final List<Widget> _pages = [MonthlyCalendarView(), DailyCalendarView()];
+  
+  void createNewTask(){
+     showDialog(context: context, builder: (context) {
 
+      return AlertDialog();
+       
+     });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,40 +45,52 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.deepPurple[300],
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 28),
         title: Text('Calendrier'),
-        
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask ,
+        child: Icon(Icons.add)
+        ),
       body: IndexedStack(
         index: _currentIndex,
-        children: _pages,
+        children: [
+          MonthlyCalendarView(onDaySelectedCallback: _onDaySelectedInMonthly,),
+          DailyCalendarView(selectedDay: _selectedDay),
+          
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.deepPurple[300],
         currentIndex: _currentIndex,
         unselectedItemColor: Colors.white,
         unselectedFontSize: 14,
-        selectedItemColor: Colors.white30 ,
-
-
+        selectedItemColor: Colors.white30,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
-
-
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today, color: Colors.white),
-            label: 'Monthly',
+        // ON CREER ICI LES ICONES DE NAVIGATIONS ENTRE LA PAGE MENSUEL ET LA PAGE JOURNALIERE 
+       items: [
+           const BottomNavigationBarItem(
+            icon:  Icon(Icons.calendar_today, color: Colors.white),
+            label: 'Mois',
           ),
-          BottomNavigationBarItem(
+           const BottomNavigationBarItem(
             icon: Icon(Icons.today, color: Colors.white),
-            label: "Jour", 
-            
-            
+            label: "Jour",
           ),
         ],
       ),
     );
+  }
+
+  void _onDaySelectedInMonthly(String formattedDate, DateTime focusedDay) {
+   
+
+    setState(() {
+     
+      _selectedDay = focusedDay;
+  
+    });
   }
 }
