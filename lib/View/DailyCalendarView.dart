@@ -8,6 +8,7 @@ class DailyCalendarView extends StatefulWidget {
   const DailyCalendarView({Key? key, required this.selectedDay, required this.taskController});
   final DateTime selectedDay;
   final TaskController taskController;
+
   
  
 
@@ -25,6 +26,8 @@ class _DailyCalendarViewState extends State<DailyCalendarView> {
      
     });
   }
+  
+ 
 
    Future<void> _showAddTaskDialog() async { // nécéssaire ici de mettre async pour que l'await show Dialog fonctionne 
     
@@ -179,10 +182,13 @@ class _DailyCalendarViewState extends State<DailyCalendarView> {
         children: [
           Expanded(
             child: ListView.builder(
+              
               itemCount: tasksForDay.length,
               itemBuilder: (context, index) {
                 Task task = tasksForDay[index];
-                return TaskTileView(task: task);
+              
+                return TaskTileView(taskController: widget.taskController, task: task, index: index, );
+               
               },
             ),
           ),

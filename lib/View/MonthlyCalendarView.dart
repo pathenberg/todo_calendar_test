@@ -24,7 +24,7 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
     });
 
   
-    String formattedDate = DateFormat('EEEE/dd/MM/yyyy', 'fr_FR').format(day);
+    String formattedDate = DateFormat('EEEE/dd/MM/yyyy', 'fr_FR').format(day); // conversion ici au format de date français
 
     widget.onDaySelectedCallback(formattedDate, focusedDay);
   }

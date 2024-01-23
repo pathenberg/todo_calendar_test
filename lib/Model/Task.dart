@@ -4,6 +4,8 @@ class Task {
   final DateTime startTime;
   final DateTime endTime;
   bool notification;
+ 
+  
 
   Task({
     required this.title,
@@ -11,5 +13,6 @@ class Task {
     required this.startTime,
     required this.endTime,
     this.notification = false,
+    
   });
 }

@@ -1,30 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_calendar_test/Model/Task.dart';
+import 'package:todo_calendar_test/Controller/TaskController.dart';
 
-class TaskTileView extends StatelessWidget {
+
+class TaskTileView extends StatefulWidget {
+  final TaskController taskController;
   final Task task;
-  TaskTileView({required this.task});
+  final int index;
+
+  TaskTileView({
+    required this.taskController,
+    required this.task,
+    required this.index,
+  });
+
+  @override
+  _TaskTileViewState createState() => _TaskTileViewState();
+}
+
+class _TaskTileViewState extends State<TaskTileView> {
+
+  onPressedDelete(index) { // tentative de rechargement d'interface post delete pour le moment sans succès
+    widget.taskController.deleteTask(widget.index);
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-return ListTile( //assignation de la vue d'une tâche qui est ensuite implémenter dans la vue DailyCalendarView pour alléger cette dernière et créer un nombre de tâche = à la liste de tâche assigné à ce jour
-  title: Text(task.title),
-  subtitle: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text('${task.startTime.hour}:${task.startTime.minute} - ${task.endTime.hour}:${task.endTime.minute}'),
-      Text('Description:', style: TextStyle(fontWeight: FontWeight.bold)),
-      Text(task.description),
-    ],
-  ),
-  trailing: Checkbox(
-    value: task.notification,
-    onChanged: (value) {
-     
-    },
-  ),
-  
-);
- 
-
-}
+    return Slidable(
+      startActionPane: ActionPane(
+        motion: StretchMotion(),
+        children: [
+          SlidableAction(
+            onPressed: onPressedDelete, // appel de la fonction quand on slide pour pouvoir supprimer la tâche concernée par le slide
+            icon: Icons.delete,
+            backgroundColor: Colors.red.shade200,
+          )
+        ],
+      ),
+      child: ListTile(
+        title: Text(widget.task.title),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                '${widget.task.startTime.hour}:${widget.task.startTime.minute} - ${widget.task.endTime.hour}:${widget.task.endTime.minute}'),
+            Text(
+              'Description:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(widget.task.description),
+          ],
+        ),
+        trailing: Checkbox(
+          value: widget.task.notification,
+          onChanged: (value) {
+          
+          },
+        ),
+      ),
+    );
+  }
 }
