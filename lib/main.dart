@@ -6,8 +6,10 @@ import 'package:todo_calendar_test/Controller/TaskController.dart';
 import 'package:todo_calendar_test/View/DailyCalendarView.dart';
 import 'package:todo_calendar_test/View/MonthlyCalendarView.dart';
 
+
+
 void main() {
-  initializeDateFormatting().then((_) => runApp(MyApp()));
+  initializeDateFormatting().then((_) => runApp(MyApp())); //on initialise ici le formattage de la date avant de lancer l'app sous peine de plantage de l'application en test.
   
 }
 
@@ -30,14 +32,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   DateTime _selectedDay = DateTime.now();
   int _currentIndex = 0;
+  final TaskController _taskController = TaskController();
   
-  void createNewTask(){
-     showDialog(context: context, builder: (context) {
-
-      return AlertDialog();
-       
-     });
-  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,15 +43,11 @@ class _HomePageState extends State<HomePage> {
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 28),
         title: Text('Calendrier'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: createNewTask ,
-        child: Icon(Icons.add)
-        ),
       body: IndexedStack(
         index: _currentIndex,
-        children: [
-          MonthlyCalendarView(onDaySelectedCallback: _onDaySelectedInMonthly,),
-          DailyCalendarView(selectedDay: _selectedDay),
+        children: [ // Initialisation de la logique permettant de changer de vue vers la vue Daily en fonction du jour seléctionné dans MonthlyCalendarView.
+          MonthlyCalendarView(onDaySelectedCallback: _onDaySelectedInMonthly,), 
+          DailyCalendarView(selectedDay: _selectedDay, taskController: _taskController),
           
         ],
       ),

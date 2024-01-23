@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:table_calendar/table_calendar.dart'; // injection de la dépendance table_calendar permettant une construction d'un calendrier mensuel
 import 'package:intl/intl.dart';
 
 class MonthlyCalendarView extends StatefulWidget {
@@ -15,6 +15,8 @@ class MonthlyCalendarView extends StatefulWidget {
 
 class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
   DateTime _today = DateTime.now();
+
+
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
@@ -40,7 +42,7 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
       child: Column(
         children: [
           Container(
-            child: TableCalendar(
+            child: TableCalendar( // création et utilisation de TableCalendar pour le rendre à mon goût
               locale: 'fr_FR',
               rowHeight: 80,
               headerStyle: const HeaderStyle(
@@ -48,7 +50,7 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                 titleCentered: true,
               ),
               availableGestures: AvailableGestures.all,
-              selectedDayPredicate: (day) => isSameDay(day, _today),
+              selectedDayPredicate: (day) => isSameDay(day, _today), // Préselection de la date du jour pour facilité l'experience utilisateur
               focusedDay: _today,
               firstDay: DateTime.utc(2010, 10, 16),
               lastDay: DateTime.utc(2030, 3, 14),
