@@ -14,7 +14,7 @@ class NotificationService {
     requestAlertPermission: true,
     requestBadgePermission: true,
     requestSoundPermission: true,
-    onDidReceiveLocalNotification: (int id, String? title,String? body,String? payload) async {
+    onDidReceiveLocalNotification: (int id ,String? title,String? body,String? payload) async {
       
     });
     var initializationSettings = InitializationSettings(
@@ -32,7 +32,7 @@ class NotificationService {
     );
   }
 
-  Future showNotification({int id = 0, String? title, String? body, String? payload}) async{
+  Future showNotification({int id = 0,  startTime, String? title, String? body, String? payload}) async{
     return notificationsPlugin.show(
       id, title, body, await notificationDetails()
     );
