@@ -5,10 +5,13 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:todo_calendar_test/Controller/TaskController.dart';
 import 'package:todo_calendar_test/View/DailyCalendarView.dart';
 import 'package:todo_calendar_test/View/MonthlyCalendarView.dart';
+import 'package:todo_calendar_test/Controller/Services/NotificationService.dart';
 
 
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   initializeDateFormatting().then((_) => runApp(MyApp())); //on initialise ici le formattage de la date avant de lancer l'app sous peine de plantage de l'application en test.
   
 }

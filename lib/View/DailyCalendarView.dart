@@ -1,20 +1,18 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_calendar_test/Controller/TaskController.dart';
 import 'package:todo_calendar_test/View/TaskTileView.dart';
 import 'package:todo_calendar_test/Model/Task.dart';
+import 'package:todo_calendar_test/Controller/Services/NotificationService.dart';
 
 class DailyCalendarView extends StatefulWidget {
   const DailyCalendarView({Key? key, required this.selectedDay, required this.taskController});
   final DateTime selectedDay;
   final TaskController taskController;
-
   
- 
-
-
-
-  @override
+   @override
   State<DailyCalendarView> createState() => _DailyCalendarViewState();
 }
 
@@ -142,6 +140,10 @@ class _DailyCalendarViewState extends State<DailyCalendarView> {
                     // utilisation de la méthode addTaskAndUpdateUi permettant de rafraichir la page avec la tâche créée sans rechargement de page
                     addTaskAndUpdateUI(title, description, startTime, endTime, notify);
                     Navigator.of(context).pop();
+                    if (notify = true) {
+                      NotificationService().showNotification(title: title, body: description);
+                      
+                    }
                   },
                   child: Text('Ajouter'),
                 ),
