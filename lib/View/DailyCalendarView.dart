@@ -140,7 +140,7 @@ class _DailyCalendarViewState extends State<DailyCalendarView> {
                     // utilisation de la méthode addTaskAndUpdateUi permettant de rafraichir la page avec la tâche créée sans rechargement de page
                     addTaskAndUpdateUI(title, description, startTime, endTime, notify);
                     Navigator.of(context).pop();
-                    if (notify = true) {
+                    if (notify == true) {
                       NotificationService().showNotification(title: title, body: description, startTime: startTime);
                       
                     }
