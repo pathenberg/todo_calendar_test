@@ -22,27 +22,31 @@ class TaskTileView extends StatefulWidget {
 }
 
 class _TaskTileViewState extends State<TaskTileView> {
-
+  
   onPressedDelete(index) { // tentative de rechargement d'interface post delete pour le moment sans succès
     widget.taskController.deleteTask(widget.index);
-    setState(() {
-
-    });
+     setState(() {});;
+    
   }
+  
 
   @override
   Widget build(BuildContext context) {
+ 
     return Slidable(
       startActionPane: ActionPane(
         motion: StretchMotion(),
         children: [
           SlidableAction(
-            onPressed: onPressedDelete, // appel de la fonction quand on slide pour pouvoir supprimer la tâche concernée par le slide
+           
+            onPressed: onPressedDelete,
+             // appel de la fonction quand on slide pour pouvoir supprimer la tâche concernée par le slide
             icon: Icons.delete,
             backgroundColor: Colors.red.shade200,
           )
         ],
       ),
+      
       child: ListTile(
         title: Text(widget.task.title),
         subtitle: Column(

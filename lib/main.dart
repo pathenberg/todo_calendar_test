@@ -6,6 +6,8 @@ import 'package:todo_calendar_test/Controller/TaskController.dart';
 import 'package:todo_calendar_test/View/DailyCalendarView.dart';
 import 'package:todo_calendar_test/View/MonthlyCalendarView.dart';
 import 'package:todo_calendar_test/Controller/Services/NotificationService.dart';
+import 'package:todo_calendar_test/View/Component/AppBarView.dart';
+import 'package:todo_calendar_test/View/Component/DrawerView.dart';
 
 
 
@@ -42,57 +44,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (context) {
-            return IconButton(icon: Icon(Icons.menu),
-            color: Colors.white,
-            onPressed: (){ 
-              Scaffold.of(context).openDrawer();},
-            );
-          }
-        ),
-        backgroundColor: Colors.deepPurple[300],
-        titleTextStyle: TextStyle(color: Colors.white, fontSize: 28),
-        title: Text(''),
-      ),
-      drawer: Drawer(
-        backgroundColor: Colors.deepPurple.shade100,
-        child: Column(
-         
-          children:[
-         
-          Padding(
-            padding: const EdgeInsets.all(100.0),
-            child: Divider(
-              color: Colors.deepPurple.shade100,
-            ),
-          ),
-        
-          Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: ListTile(
-              leading: Icon(Icons.calendar_month),
-              title: Text('Calendrier'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: ListTile(
-              leading: Icon(Icons.account_box),
-              title: Text('Mon Profil'),
-            ),
-          ),
-           Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Déconnexion'),
-            ),
-          ),]
-         
-      ),
-      ),
+      appBar: CustomAppBar(title: 'Calendrier'), //AppBarView renvoie cette appBar, on a variabilisé en amont le titre pour qu'il puisse être différent en fonciton de la page
+
+      drawer: CustomDrawer(), // DrawerView renvoie ce drawer
+      
       body: IndexedStack(
         index: _currentIndex,
         children: [ // Initialisation de la logique permettant de changer de vue vers la vue Daily en fonction du jour seléctionné dans MonthlyCalendarView.

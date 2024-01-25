@@ -8,8 +8,12 @@ class TaskController {
   void deleteTask(int index) {
     if (index >= 0 && index < taskList.length) {
       taskList.removeAt(index);
+      
     }
+    
   }
+  
+  
 
   void addTask(String title, String description, DateTime startTime, DateTime endTime, bool notify) {
     Task newTask = Task(
